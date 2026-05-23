@@ -1,0 +1,100 @@
+/* 1. Full Page Wrapper to center the card */
+.contact-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f9f9f9 0%, #eef2f3 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+/* 2. Main Container Card Styling */
+.contact-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 500px;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+/* Typography elements */
+.contact-card h1 {
+  font-size: 2.2rem;
+  color: #222222;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #777777;
+  line-height: 1.5;
+  margin-bottom: 35px;
+  text-align: center;
+}
+
+/* 3. Row Item Styling (Flexbox alignment) */
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid #f0f0f0;
+  transition: transform 0.2s ease;
+}
+
+/* Remove bottom border on the last item */
+.contact-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Icon / Emoji Styling */
+.contact-item > span {
+  font-size: 1.6rem;
+  background-color: #fff0ec; /* Light theme color background for icons */
+  padding: 10px;
+  border-radius: 50%;
+  line-height: 1;
+}
+
+/* Content wrapper next to icons */
+.contact-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-item h3 {
+  font-size: 1.1rem;
+  color: #333333;
+  margin: 0 0 4px 0;
+  font-weight: 600;
+}
+
+/* Paragraphs and Links inside the rows */
+.contact-item p, 
+.contact-item a {
+  font-size: 0.95rem;
+  color: #555555;
+  margin: 0;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+/* Interactive focus color for email and phone */
+.contact-item a:hover {
+  color: #ff6347; /* Restaurant tomato theme color */
+  text-decoration: underline;
+}
+
+/* Subtle effect when user interacts with a row */
+.contact-item:hover {
+  transform: translateX(3px);
+}

@@ -1,0 +1,181 @@
+/* =========================================
+   PREMIUM NON-VEG PAGE STYLES
+   ========================================= */
+
+.nonveg-container {
+  padding: clamp(20px, 5vw, 50px);
+  min-height: 100vh;
+  background-color: #fffaf0;
+  background-image: 
+    radial-gradient(at 100% 0%, rgba(255, 235, 238, 0.5) 0px, transparent 50%),
+    linear-gradient(135deg, #fff5f5 0%, #fffaf0 100%);
+  font-family: 'Poppins', sans-serif;
+  color: #2d3436;
+}
+
+.nonveg-title {
+  text-align: center;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  margin-bottom: 50px;
+  background: linear-gradient(to right, #d32f2f, #ef5350, #ff7043);
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 10px rgba(211, 47, 47, 0.2));
+}
+
+/* GRID LAYOUT */
+.nonveg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 35px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* CARD DESIGN */
+.nonveg-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 35px;
+  padding: 25px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.nonveg-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 25px 50px rgba(211, 47, 47, 0.12);
+  border-color: rgba(211, 47, 47, 0.2);
+}
+
+.nonveg-image {
+  width: 100%;
+  aspect-ratio: 1.2/1;
+  object-fit: cover;
+  border-radius: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  transition: transform 0.5s ease;
+}
+
+.nonveg-card:hover .nonveg-image {
+  transform: scale(1.05);
+}
+
+.nonveg-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.nonveg-price {
+  font-size: 22px;
+  color: #d32f2f;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.nonveg-description {
+  font-size: 14px;
+  color: #636e72;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  min-height: 45px;
+}
+
+/* THE FAMOUS ADD TO CART BUTTON */
+.add-cart-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
+  color: white;
+  border: none;
+  border-radius: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(255, 75, 43, 0.25);
+  transition: all 0.3s ease;
+}
+
+.add-cart-btn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 15px 25px rgba(255, 75, 43, 0.35);
+}
+
+.add-cart-btn:active {
+  transform: scale(0.96);
+}
+
+/* PAGINATION STYLING */
+.pagination {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.page-btn {
+  padding: 12px 22px;
+  border-radius: 15px;
+  border: none;
+  background: white;
+  color: #d32f2f;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.page-btn:hover:not(:disabled) {
+  background: #fff5f5;
+  transform: translateY(-2px);
+}
+
+.page-btn.active {
+  background: #d32f2f;
+  color: white;
+  box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   LIBRARIES CUSTOMIZATION (Toastify & SweetAlert)
+   ========================================= */
+
+/* Making Toastify look cleaner */
+.Toastify__toast {
+  border-radius: 16px !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* Custom SweetAlert Popup Style (Optional CSS hook) */
+.swal2-popup {
+  font-family: 'Poppins', sans-serif !important;
+  padding: 2em !important;
+}
+
+.swal2-title {
+  color: #1a1a1a !important;
+  font-weight: 800 !important;
+}
+
+/* RESPONSIVE FIXES */
+@media (max-width: 768px) {
+  .nonveg-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+}

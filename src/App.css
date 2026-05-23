@@ -1,0 +1,53 @@
+/* Navbar container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #222;
+}
+
+/* Brand */
+.brand {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* Nav links container */
+.nav-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+}
+
+/* Active link */
+.nav-links a.active {
+  color: #00ff88;
+  border-bottom: 2px solid #00ff88;
+  padding-bottom: 2px;
+}
+
+/* Hover effect */
+.nav-links a:hover {
+  opacity: 0.7;
+}
+
+/* Special links */
+.cart-link {
+  color: orange;
+}
+
+.cart-link:hover {
+  color: #ffb347;
+}
+
+.login-nav-btn {
+  color: cyan;
+}
+
+.login-nav-btn:hover {
+  color: #00ffff;
+}

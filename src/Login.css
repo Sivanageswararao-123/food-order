@@ -1,0 +1,134 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* FULL PAGE BACKGROUND */
+.login-page {
+  height: 100vh;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(135deg, #f9f9f9, #eef2f3);
+}
+
+/* LOGIN CARD */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+
+  background: #ffffff;
+
+  padding: 40px 30px;
+
+  border-radius: 14px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* TITLE */
+.login-card h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+/* SUBTITLE */
+.login-card p {
+  text-align: center;
+  color: #777;
+  margin-bottom: 25px;
+}
+
+/* FORM */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* INPUT FIELDS */
+.login-form input {
+  padding: 12px 14px;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+  font-size: 1rem;
+
+  outline: none;
+
+  transition: 0.3s ease;
+}
+
+/* INPUT FOCUS */
+.login-form input:focus {
+  border-color: tomato;
+  box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.2);
+}
+
+/* BUTTON */
+.login-btn {
+  padding: 12px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: tomato;
+  color: white;
+
+  font-size: 1rem;
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.login-btn:hover {
+  background: orangered;
+  transform: scale(1.03);
+}
+
+/* SIGNUP TEXT */
+.signup-text {
+  margin-top: 15px;
+  text-align: center;
+
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.signup-text a {
+  color: tomato;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.signup-text a:hover {
+  text-decoration: underline;
+}
+
+/* ERROR MESSAGE (optional) */
+.error {
+  color: red;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 500px) {
+  .login-card {
+    margin: 20px;
+    padding: 25px;
+  }
+
+  .login-card h2 {
+    font-size: 1.6rem;
+  }
+}
