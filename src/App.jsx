@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 
 // Pages
 import Home from "./Home";
@@ -14,7 +21,6 @@ import About from "./About";
 import Contactus from "./Contactus";
 import Register from "./Register";
 import Login from "./Login";
-
 
 // Toastify
 import { ToastContainer } from "react-toastify";
@@ -30,23 +36,60 @@ import {
   FaInfoCircle,
   FaPhone,
   FaKey,
-  FaBox
+  FaBox,
+  FaUserPlus,
 } from "react-icons/fa";
 
-function App() {
-  let user = JSON.parse(localStorage.getItem("loggedInUser"));
+/* ---------------- PROTECTED ROUTE ---------------- */
+function ProtectedRoute({ user, children }) {
+  return user ? children : <Navigate to="/login" replace />;
+}
 
-  let logout = () => {
+/* ---------------- MAIN CONTENT ---------------- */
+function AppContent() {
+  const navigate = useNavigate();
 
-    // Remove logged in user
+  const [user, setUser] = useState(null);
+
+  // Load user once on start
+  useEffect(() => {
+    const syncUser = () => {
+      try {
+        const storedUser =
+          localStorage.getItem("loggedInUser");
+
+        setUser(
+          storedUser
+            ? JSON.parse(storedUser)
+            : null
+        );
+      } catch (err) {
+        setUser(null);
+      }
+    };
+
+    syncUser();
+
+    window.addEventListener("storage", syncUser);
+
+    return () =>
+      window.removeEventListener(
+        "storage",
+        syncUser
+      );
+  }, []);
+
+  // Logout
+  const logout = () => {
     localStorage.removeItem("loggedInUser");
 
-    // Refresh page
-    window.location.reload();
-  }
-  return (
-    <BrowserRouter>
+    setUser(null);
 
+    navigate("/login");
+  };
+
+  return (
+    <>
       {/* TOAST */}
       <ToastContainer
         position="top-right"
@@ -62,7 +105,7 @@ function App() {
       {/* NAVBAR */}
       <nav className="navbar">
 
-        <Link to="/" className="nav-link">
+        <Link to="/home" className="nav-link">
           <FaHome /> Home
         </Link>
 
@@ -78,40 +121,66 @@ function App() {
           <FaGlassCheers /> Drinks
         </Link>
 
-        {
-	  user ? (
-		<>
-		  <span style={{color:"white"}}>Welcome,{user.name}</span>
-		  <button onClick={logout}>Logout</button>
-		</>
-	  ) : (
-		<Link to="/" className="nav-link">
-          <FaKey /> Login
+        {/* AUTH SECTION */}
+        {user ? (
+          <>
+            <span
+              style={{
+                color: "white",
+                margin: "0 10px",
+              }}
+            >
+              Welcome, {user.name}
+            </span>
+
+            <button
+              className="logout-btn"
+              onClick={logout}
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link
+            to="/login"
+            className="nav-link"
+          >
+            <FaKey /> Login
+          </Link>
+        )}
+
+        <Link
+          to="/register"
+          className="nav-link"
+        >
+          <FaUserPlus /> Register
         </Link>
-	  )
-	}
 
-        
-
-        <Link to="/register" className="nav-link">
-          <FaKey /> Register
-        </Link>
-
-        {/* CART */}
-        <Link to="/cart" className="nav-link cart-link">
+        <Link
+          to="/cart"
+          className="nav-link cart-link"
+        >
           <FaShoppingCart /> Cart
         </Link>
 
-        {/* ORDERS */}
-        <Link to="/orders" className="nav-link cart-link">
+        <Link
+          to="/orders"
+          className="nav-link cart-link"
+        >
           <FaBox /> Orders
         </Link>
 
-        <Link to="/about" className="nav-link">
+        <Link
+          to="/about"
+          className="nav-link"
+        >
           <FaInfoCircle /> About
         </Link>
 
-        <Link to="/contactus" className="nav-link">
+        <Link
+          to="/contactus"
+          className="nav-link"
+        >
           <FaPhone /> ContactUs
         </Link>
 
@@ -119,18 +188,99 @@ function App() {
 
       {/* ROUTES */}
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/veg" element={<Veg />} />
-        <Route path="/nonveg" element={<Nonveg />} />
-        <Route path="/drinks" element={<Drinks />} />
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />}/>
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contactus" element={<Contactus />} />
-      </Routes>
 
+        {/* DEFAULT ROUTE */}
+        <Route
+          path="/"
+          element={<Navigate to="/home" />}
+        />
+
+        {/* LOGIN */}
+        <Route
+          path="/login"
+          element={
+            user ? (
+              <Navigate to="/home" />
+            ) : (
+              <Login />
+            )
+          }
+        />
+
+        {/* REGISTER */}
+        <Route
+          path="/register"
+          element={
+            user ? (
+              <Navigate to="/home" />
+            ) : (
+              <Register />
+            )
+          }
+        />
+
+        {/* PUBLIC ROUTES */}
+        <Route
+          path="/home"
+          element={<Home />}
+        />
+
+        <Route
+          path="/veg"
+          element={<Veg />}
+        />
+
+        <Route
+          path="/nonveg"
+          element={<Nonveg />}
+        />
+
+        <Route
+          path="/drinks"
+          element={<Drinks />}
+        />
+
+        {/* PROTECTED CART */}
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute user={user}>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* PROTECTED ORDERS */}
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute user={user}>
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* OTHER ROUTES */}
+        <Route
+          path="/about"
+          element={<About />}
+        />
+
+        <Route
+          path="/contactus"
+          element={<Contactus />}
+        />
+
+      </Routes>
+    </>
+  );
+}
+
+/* ---------------- APP WRAPPER ---------------- */
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }
