@@ -11,7 +11,7 @@ import {
 import { applyCoupon, removeCoupon } from "./couponSlice";
 import { addOrder } from "./OrdersSlice";
 
-import QRCode from "react-qr-code";
+import {QRCode} from "react-qr-code";
 
 import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
