@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
 
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
-// Pages (MUST match exact file names)
+// Pages
 import Home from "./Home";
 import Veg from "./Veg";
 import Nonveg from "./Nonveg";
 import Drinks from "./Drinks";
 import Cart from "./Cart";
-import Orders from "./Orders";
 import About from "./About";
 import Contactus from "./Contactus";
-import Register from "./Register";
 import Login from "./Login";
+import Register from "./Register";
+import Orders from "./Orders";
 
-// Toast
+// Toastify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -36,114 +29,107 @@ import {
   FaInfoCircle,
   FaPhone,
   FaKey,
-  FaBox,
-  FaUserPlus,
+  FaBox
 } from "react-icons/fa";
 
-/* ---------------- Protected Route ---------------- */
-function ProtectedRoute({ user, children }) {
-  return user ? children : <Navigate to="/login" replace />;
-}
+function App() {
+  let user = JSON.parse(localStorage.getItem("loggedInUser"));
 
-/* ---------------- App Content ---------------- */
-function AppContent() {
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  let logout = () => {
 
-  useEffect(() => {
-    const syncUser = () => {
-      try {
-        const storedUser = localStorage.getItem("loggedInUser");
-        setUser(storedUser ? JSON.parse(storedUser) : null);
-      } catch {
-        setUser(null);
-      }
-    };
-
-    syncUser();
-    window.addEventListener("storage", syncUser);
-
-    return () =>
-      window.removeEventListener("storage", syncUser);
-  }, []);
-
-  const logout = () => {
+    // Remove logged in user
     localStorage.removeItem("loggedInUser");
-    setUser(null);
-    navigate("/login");
-  };
 
+    // Refresh page
+    window.location.reload();
+  }
   return (
-    <>
-      <ToastContainer />
+    <BrowserRouter>
+
+      {/* TOAST */}
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="dark"
+      />
 
       {/* NAVBAR */}
       <nav className="navbar">
-        <Link to="/home"><FaHome /> Home</Link>
-        <Link to="/veg"><FaCarrot /> Veg</Link>
-        <Link to="/nonveg"><FaDrumstickBite /> NonVeg</Link>
-        <Link to="/drinks"><FaGlassCheers /> Drinks</Link>
 
-        {user ? (
-          <>
-            <span style={{ color: "white", margin: "0 10px" }}>
-              Welcome, {user.name}
-            </span>
-            <button onClick={logout}>Logout</button>
-          </>
-        ) : (
-          <Link to="/login"><FaKey /> Login</Link>
-        )}
+        <Link to="/" className="nav-link">
+          <FaHome /> Home
+        </Link>
 
-        <Link to="/register"><FaUserPlus /> Register</Link>
-        <Link to="/cart"><FaShoppingCart /> Cart</Link>
-        <Link to="/orders"><FaBox /> Orders</Link>
-        <Link to="/about"><FaInfoCircle /> About</Link>
-        <Link to="/contactus"><FaPhone /> Contact</Link>
+        <Link to="/veg" className="nav-link">
+          <FaCarrot /> Veg
+        </Link>
+
+        <Link to="/nonveg" className="nav-link">
+          <FaDrumstickBite /> NonVeg
+        </Link>
+
+        <Link to="/drinks" className="nav-link">
+          <FaGlassCheers /> Drinks
+        </Link>
+
+        {
+	  user ? (
+		<>
+		  <span style={{color:"white"}}>Welcome,{user.name}</span>
+		  <button onClick={logout}>Logout</button>
+		</>
+	  ) : (
+		<Link to="/" className="nav-link">
+          <FaKey /> Login
+        </Link>
+	  )
+	}
+
+        
+
+        <Link to="/register" className="nav-link">
+          <FaKey /> Register
+        </Link>
+
+        {/* CART */}
+        <Link to="/cart" className="nav-link cart-link">
+          <FaShoppingCart /> Cart
+        </Link>
+
+        {/* ORDERS */}
+        <Link to="/orders" className="nav-link cart-link">
+          <FaBox /> Orders
+        </Link>
+
+        <Link to="/about" className="nav-link">
+          <FaInfoCircle /> About
+        </Link>
+
+        <Link to="/contactus" className="nav-link">
+          <FaPhone /> ContactUs
+        </Link>
+
       </nav>
 
       {/* ROUTES */}
       <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
-
-        <Route path="/login" element={user ? <Navigate to="/home" /> : <Login />} />
-        <Route path="/register" element={user ? <Navigate to="/home" /> : <Register />} />
-
         <Route path="/home" element={<Home />} />
         <Route path="/veg" element={<Veg />} />
         <Route path="/nonveg" element={<Nonveg />} />
         <Route path="/drinks" element={<Drinks />} />
-
-        <Route
-          path="/cart"
-          element={
-            <ProtectedRoute user={user}>
-              <Cart />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/orders"
-          element={
-            <ProtectedRoute user={user}>
-              <Orders />
-            </ProtectedRoute>
-          }
-        />
-
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />}/>
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/orders" element={<Orders />} />
         <Route path="/about" element={<About />} />
         <Route path="/contactus" element={<Contactus />} />
       </Routes>
-    </>
-  );
-}
 
-/* ---------------- App Wrapper ---------------- */
-function App() {
-  return (
-    <BrowserRouter>
-      <AppContent />
     </BrowserRouter>
   );
 }
